@@ -26,6 +26,9 @@ const signUp = async (req, res) => {
         const profile_image = req?.file?.filename;
         const otp = Math.floor(100000 + Math.random() * 9000);
 
+        const currentTime = Date.now();
+        const expirationMinutes = 2;
+        const opt_time = new Date(currentTime + expirationMinutes * 60 * 1000);
         const existUser = await User.findOne({ where: { email: email } });
         if (existUser) {
             if (existUser.isVerify == 1) {
@@ -33,10 +36,10 @@ const signUp = async (req, res) => {
             };
             await existUser.update({ otp });
         } else {
-            await User.create({ name, email, phone_no, Password, profile_image, otp })
+            await User.create({ name, email, phone_no, Password, profile_image, otp, opt_time })
         }
 
-        const mail = mailUtils.sendMail("otp mail", `verify email otp  : ${otp}`);
+        // const mail = mailUtils.sendMail("otp mail", `verify email otp  : ${otp}`);
         return RESPONSE.success(res, 1001)
     } catch (error) {
         console.log(error);
@@ -54,10 +57,9 @@ const emailVerify = async (req, res) => {
         firstMessage = Object.keys(validation.errors.all())[0];
         return RESPONSE.error(res, validation.errors.first(firstMessage))
     };
-
     try {
         const { email, otp } = req.body;
-
+        const currentTime = Date.now();
         const isExist = await User.findOne({ where: { email: email } })
         if (!isExist) {
             return RESPONSE.success(res, 1013)
@@ -70,6 +72,12 @@ const emailVerify = async (req, res) => {
         if (isExist.otp != otp) {
             return RESPONSE.error(res, 1015)
         }
+       
+       if (currentTime >=isExist.opt_time) {
+          return RESPONSE.error(res,1017)
+        }
+
+       
         await isExist.update({ isVerify: true })
 
         return RESPONSE.success(res, 1016)

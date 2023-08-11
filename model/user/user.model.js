@@ -38,6 +38,9 @@ module.exports = (sequelize, Sequelize) => {
              type : Sequelize.INTEGER,
 
         },
+        opt_time : {
+            type : Sequelize.DATE,
+        },
         isVerify : {
            type : Sequelize.BOOLEAN,
            defaultValue :false

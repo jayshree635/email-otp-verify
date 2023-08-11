@@ -16,6 +16,7 @@ const MESSAGES = {
     '1014': 'email is verifyed',
     '1015' : 'send again mail',
     '1016' : 'email verify successfully...',
+    '1017' : 'otp time expire Send mail again',
     //super admin controller
 
     '1403': 'Get admin successfully!',
