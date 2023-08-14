@@ -36,7 +36,8 @@ const signUp = async (req, res) => {
             };
             await existUser.update({ otp });
         } else {
-            await User.create({ name, email, phone_no, Password, profile_image, otp, opt_time })
+            await User.create({ name, email, phone_no, Password, profile_image, otp, opt_time });
+            
         }
 
         // const mail = mailUtils.sendMail("otp mail", `verify email otp  : ${otp}`);
