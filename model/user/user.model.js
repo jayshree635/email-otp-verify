@@ -19,7 +19,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false,
             set(value) {
-                this.setDataValue('Password', bcrypt.hashSync(value, 10));
+                this.setDataValue('password', bcrypt.hashSync(value, 10));
             }
         },
         phone_no: {

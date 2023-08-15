@@ -29,6 +29,7 @@ const signUp = async (req, res) => {
         const currentTime = Date.now();
         const expirationMinutes = 2;
         const opt_time = new Date(currentTime + expirationMinutes * 60 * 1000);
+        
         const existUser = await User.findOne({ where: { email: email } });
         if (existUser) {
             if (existUser.isVerify == 1) {

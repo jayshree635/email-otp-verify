@@ -6,11 +6,11 @@ const config = require('../config/config')
     try {
         const transporter = await nodemailer.createTransport({
             host: 'smtp.gmail.com',
-            port: 587, // Port for secure TLS/STARTTLS
-            secure: false, // true for 465, false for other ports
+            port: 587, 
+            secure: false,
             auth: {
-                user: config.email.email, // Your email address
-                pass: config.email.pass, // Your email password or app password
+                user: config.email.email, 
+                pass: config.email.pass, 
             },
         });
     
